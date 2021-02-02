@@ -5,9 +5,9 @@ using UnityEngine.Tilemaps;
 
 public class GridMovement : MonoBehaviour
 {
-    private bool isMoving;
-    private Vector3 oriPos, targetPos;
-    private float timeToMove = 0.2f;
+    //private bool isMoving;
+    //private Vector3 oriPos, targetPos;
+    //private float timeToMove = 0.2f;
 
     //[SerializeField]
     //private Tilemap Tilemap_Ground;
@@ -39,11 +39,11 @@ public class GridMovement : MonoBehaviour
                     movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                 }
             }
-            if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
+            else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
             {
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f), .2f, whatStopMovement))
                 {
-                    movePoint.position += new Vector3(0f, Input.GetAxisRaw("Horizontal"), 0f);
+                    movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
                 }
             }
         }
