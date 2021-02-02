@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class GameZone : MonoBehaviour
 {
     public bool lvl1Done = false;
-    public GameObject _player;
+    public Transform _player;
 
     private const float CameraPositionModifier = 0.5f;
     private const float CameraSizeModifier = 1.2f;
@@ -100,10 +100,8 @@ public class GameZone : MonoBehaviour
                 {
                     _gameZoneTilemap_Ground.SetTile(currentCellPosition, _tilesHolder.GetStartTile());
                     Vector3 startPosition = _gameZoneTilemap_Ground.CellToWorld(currentCellPosition);
-                    _player.transform.position = startPosition;
-                    //startPoint = currentCellPosition;
-                    //_player.transform.position = Vector3.MoveTowards(transform.position, startPosition, 5f * Time.deltaTime);
-
+                    _player.transform.position = startPosition + new Vector3(1,-1,0);
+                    
                     Debug.Log("startPoint" + startPoint);
                     Debug.Log("origin" + origin);
                     Debug.Log("CurrentCellPosition" + currentCellPosition);
@@ -122,7 +120,7 @@ public class GameZone : MonoBehaviour
         }
         _gameZoneTilemap_Ground.CompressBounds();
 
-        ModifyCamera(width);
+        //ModifyCamera(width);
     }
 
 
