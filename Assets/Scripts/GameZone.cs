@@ -9,9 +9,11 @@ public class GameZone : MonoBehaviour
     public bool lvl1Done = false;
     public GameObject _playerGameObject;
     public GameObject _keyGameObject;
+    public GameObject _doorGameObject;
 
     private Transform _playerTransform;
     private Transform _keyTransform;
+    private Transform _doorTransform;
     
     private const float CameraPositionModifier = 0.5f;
     private const float CameraSizeModifier = 1.2f;
@@ -35,10 +37,11 @@ public class GameZone : MonoBehaviour
     {
         _playerTransform = _playerGameObject.transform;
         _keyTransform = _keyGameObject.transform;
+        _doorTransform = _doorGameObject.transform;
         _gameZoneTilemap_Ground = GameObject.Find("Ground").GetComponent<Tilemap>();
         _gameZoneTilemap_Collider = GameObject.Find("Collision").GetComponent<Tilemap>();
         _tilesHolder = GetComponent<TilesHolder>();
-        //_gameData = FindObjectOfType<Level>();
+        //_gameData = FindObjectOfType<Level>();    
         _camera = Camera.main;
 
     }
@@ -90,8 +93,10 @@ public class GameZone : MonoBehaviour
                 }
                 else if (level[h, w] == 'd')
                 {
-                    _gameZoneTilemap_Ground.SetTile(currentCellPosition, _tilesHolder.GetDoorTile());
+                    _gameZoneTilemap_Ground.SetTile(currentCellPosition, _tilesHolder.GetBaseTile());
                     Vector3 doorPoint = _gameZoneTilemap_Ground.CellToWorld(currentCellPosition);
+                    _doorTransform.transform.position = doorPoint + new Vector3(1, -1, 0);
+                    Spawn(_doorGameObject, _doorTransform);
 
                 }
                 else if (level[h, w] == 's')

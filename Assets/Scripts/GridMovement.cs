@@ -22,6 +22,7 @@ public class GridMovement : MonoBehaviour
     private LayerMask whatStopMovement;
 
     private GameObject[] key;
+    private GameObject[] door;
     
     public bool haveKey = false;
 
@@ -29,7 +30,7 @@ public class GridMovement : MonoBehaviour
     {
         movePoint.parent = null;
         key = GameObject.FindGameObjectsWithTag("Key");
-
+        door = GameObject.FindGameObjectsWithTag("Door");
     }
     // Update is called once per frame
     void Update()
@@ -71,8 +72,12 @@ public class GridMovement : MonoBehaviour
 
         if (col.gameObject.tag == "Door")
         {
-            Debug.Log("Door !");
-            
+            Debug.Log("You need a key !");
+            if (col.gameObject.tag == "Door" && haveKey)
+            {
+                Debug.Log("Door open !");
+                GameZone.Destroy(door[0]);
+            }
         }
     }
 }

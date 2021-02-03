@@ -190,10 +190,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a85ce519176e94d8515e3ccc444d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lvl1Done: 1
+  lvl1Done: 0
   _playerGameObject: {fileID: 6046645952851487157, guid: 328f28952278b2c4ba13a31391f9d9e8,
     type: 3}
   _keyGameObject: {fileID: 4092340317573682014, guid: a91d3b115a83e9f47a1f0f75f276dd26,
+    type: 3}
+  _doorGameObject: {fileID: 3362319774786369351, guid: c2cf823b761bbf243a32eefe88f8f165,
     type: 3}
 --- !u!1 &495603517
 GameObject:
