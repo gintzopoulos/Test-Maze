@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Level : MonoBehaviour
+class Level : MonoBehaviour
 {
     public static readonly char[,] level_1 = {
         { '0', '0', '0', '0', 'e' },
@@ -19,11 +19,11 @@ public class Level : MonoBehaviour
         { '0', '1', 'd', '1', '0' }
     };
     
-
+    /*
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-    }
+    }*/
 }
 
 

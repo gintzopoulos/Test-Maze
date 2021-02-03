@@ -18,23 +18,29 @@ public class GridMovement : MonoBehaviour
     private float moveSpeed = 5f;
     [SerializeField]
     private Transform movePoint;
+    [SerializeField]
+    private LayerMask whatStopMovement;
 
-    public LayerMask whatStopMovement;
+    private GameObject[] key;
+    
+    public bool haveKey = false;
 
     private void Start()
     {
         movePoint.parent = null;
+        key = GameObject.FindGameObjectsWithTag("Key");
+
     }
     // Update is called once per frame
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
-        if(Vector3.Distance(transform.position, movePoint.position) <= .05f)
+        if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
         {
-            if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
             {
-                if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, whatStopMovement))
+                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, whatStopMovement))
                 {
                     movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
                 }
@@ -47,73 +53,26 @@ public class GridMovement : MonoBehaviour
                 }
             }
         }
-       //if(Input.GetKey(KeyCode.W) && !isMoving)
-       // {
-       //     StartCoroutine(MovePlayer(Vector3.up));
-       // }
-       //if(Input.GetKey(KeyCode.A) && !isMoving)
-       // {
-       //     StartCoroutine(MovePlayer(Vector3.left));
-       // }
-       //if (Input.GetKey(KeyCode.S) && !isMoving)
-       // {
-       //     StartCoroutine(MovePlayer(Vector3.down));
-       // }
-       // if (Input.GetKey(KeyCode.D) && !isMoving)
-       // {
-       //     StartCoroutine(MovePlayer(Vector3.right));
-       // }
     }
 
-    //private IEnumerator MovePlayer(Vector3 direction)
-    //{
-    //    isMoving = true;
-
-    //    float elapsedTime = 0;
-    //    oriPos = transform.position;
-    //    targetPos = oriPos + direction;
-
-    //    while(elapsedTime < timeToMove)
-    //    {
-    //        transform.position = Vector3.Lerp(oriPos, targetPos, (elapsedTime / timeToMove));
-    //        elapsedTime += Time.deltaTime;
-    //        yield return null;
-    //    }
-
-    //    transform.position = targetPos;
-
-    //    isMoving = false;
-    //}
-
-    /*private IEnumerator Move(Vector3 direction)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        isMoving = true;
-        float elapsedTime = 0;
+        Debug.Log(key.Length);
 
-        if (canMove(direction))
+        //haveKey = true;
+
+        if (col.gameObject.tag == "Key")
         {
-            while (elapsedTime < timeToMove)
-            {
-                //transform.position = Vector3.Lerp(oriPos, targetPos, (elapsedTime / timeToMove));
-                transform.position += direction;
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-            //transform.position += direction;
-            isMoving = false;
+            Debug.Log("Key !");
+            haveKey = true;
+            Debug.Log(haveKey);
+            GameZone.Destroy(key[0]);
         }
-    }*/
-    
-    /*private bool canMove(Vector2 direction)
-    {
-        Vector3Int gridPosition = Tilemap_Ground.WorldToCell(transform.position + (Vector3)direction);
-        if(!Tilemap_Ground.HasTile(gridPosition) || Tilemap_Collider.HasTile(gridPosition))
+
+        if (col.gameObject.tag == "Door")
         {
-            Debug.Log("canMove false");
-            return false;
+            Debug.Log("Door !");
             
         }
-        Debug.Log("canMove true");
-        return true;
-    }*/
+    }
 }
