@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Tilemaps;
 
 public class GridMovement : MonoBehaviour
 {
@@ -12,6 +11,8 @@ public class GridMovement : MonoBehaviour
     private Transform movePoint;
     [SerializeField]
     private LayerMask whatStopMovement;
+    [SerializeField]
+    private GameObject keyImage;
 
     private GameObject[] key;
     private GameObject[] door;
@@ -50,8 +51,9 @@ public class GridMovement : MonoBehaviour
                 }
             }
         }
-        
-        if(scene.name == "Level 2")
+        isPossesKey();
+
+        if (scene.name == "Level 2")
         {
             haveFinish = true;
         }
@@ -93,8 +95,18 @@ public class GridMovement : MonoBehaviour
                 haveFinish = true;
                 haveKey = false;
             }
+        } 
+    }
+
+    private void isPossesKey()
+    {
+        if (haveKey)
+        {
+            keyImage.SetActive(true);
         }
-       
-        
+        else
+        {
+            keyImage.SetActive(false);
+        }    
     }
 }
