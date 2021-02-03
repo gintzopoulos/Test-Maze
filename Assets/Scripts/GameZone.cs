@@ -7,29 +7,26 @@ using UnityEngine.Tilemaps;
 public class GameZone : MonoBehaviour
 {
     public bool lvl1Done = false;
-    public GameObject _playerGameObject;
-    public GameObject _keyGameObject;
-    public GameObject _doorGameObject;
+    [SerializeField]
+    private GameObject _playerGameObject;
+    [SerializeField]
+    private GameObject _keyGameObject;
+    [SerializeField]
+    private GameObject _doorGameObject;
+    [SerializeField]
+    private GameObject _exitGameObject;
+
 
     private Transform _playerTransform;
     private Transform _keyTransform;
     private Transform _doorTransform;
+    private Transform _exitTransform;
     
-    private const float CameraPositionModifier = 0.5f;
-    private const float CameraSizeModifier = 1.2f;
-  
     private Tilemap _gameZoneTilemap_Ground;
     private Tilemap _gameZoneTilemap_Collider;
 
     private TilesHolder _tilesHolder;
-    private Level _gameData;
-    private Camera _camera;
-
-    
-    //private Vector3 keyPoint;
-    //private Vector3 doorPoint;
-
-
+ 
     private readonly char[,] lvl1 = Level.level_1;
     private readonly char[,] lvl2 = Level.level_2;
 
@@ -38,11 +35,10 @@ public class GameZone : MonoBehaviour
         _playerTransform = _playerGameObject.transform;
         _keyTransform = _keyGameObject.transform;
         _doorTransform = _doorGameObject.transform;
+        _exitTransform = _exitGameObject.transform;
         _gameZoneTilemap_Ground = GameObject.Find("Ground").GetComponent<Tilemap>();
         _gameZoneTilemap_Collider = GameObject.Find("Collision").GetComponent<Tilemap>();
         _tilesHolder = GetComponent<TilesHolder>();
-        //_gameData = FindObjectOfType<Level>();    
-        _camera = Camera.main;
 
     }
 
@@ -108,8 +104,11 @@ public class GameZone : MonoBehaviour
                 }
                 else if (level[h, w] == 'e')
                 {
-                    _gameZoneTilemap_Ground.SetTile(currentCellPosition, _tilesHolder.GetEndTile());
+                    _gameZoneTilemap_Ground.SetTile(currentCellPosition, _tilesHolder.GetBaseTile());
                     Vector3 endPoint = _gameZoneTilemap_Ground.CellToWorld(currentCellPosition);
+                    _exitTransform.transform.position = endPoint + new Vector3(1, -1, 0);
+                    Spawn(_exitGameObject, _exitTransform.transform);
+
                 }
                 currentCellPosition = new Vector3Int(
                     (int)(cellSize.x + currentCellPosition.x), currentCellPosition.y, origin.z);

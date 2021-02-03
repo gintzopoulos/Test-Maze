@@ -5,14 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class GridMovement : MonoBehaviour
 {
-    //private bool isMoving;
-    //private Vector3 oriPos, targetPos;
-    //private float timeToMove = 0.2f;
-
-    //[SerializeField]
-    //private Tilemap Tilemap_Ground;
-    //[SerializeField]
-    //private Tilemap Tilemap_Collider;
+    GameManager Scene;
 
     [SerializeField]
     private float moveSpeed = 5f;
@@ -25,12 +18,14 @@ public class GridMovement : MonoBehaviour
     private GameObject[] door;
     
     public bool haveKey = false;
+    private bool haveFinish = false;
 
     private void Start()
     {
         movePoint.parent = null;
         key = GameObject.FindGameObjectsWithTag("Key");
         door = GameObject.FindGameObjectsWithTag("Door");
+        //Scene = GameObject.FindGameObjectWithTag("GameManager");
     }
     // Update is called once per frame
     void Update()
@@ -58,10 +53,7 @@ public class GridMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(key.Length);
-
-        //haveKey = true;
-
+        
         if (col.gameObject.tag == "Key")
         {
             Debug.Log("Key !");
@@ -78,6 +70,14 @@ public class GridMovement : MonoBehaviour
                 Debug.Log("Door open !");
                 GameZone.Destroy(door[0]);
             }
+        }
+
+        if (col.gameObject.tag == "Exit")
+        {
+            Debug.Log("Exit !");
+            haveFinish = true;
+            Scene.NextLevel();
+            
         }
     }
 }
