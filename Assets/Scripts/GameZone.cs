@@ -117,7 +117,7 @@ public class GameZone : MonoBehaviour
             currentCellPosition = new Vector3Int(origin.x, (int)(cellSize.y + currentCellPosition.y), origin.z);
         }
         _gameZoneTilemap_Ground.CompressBounds();
-        //ModifyCamera(width);
+        
     }
     private void Spawn(GameObject obj, Transform pos)
     {

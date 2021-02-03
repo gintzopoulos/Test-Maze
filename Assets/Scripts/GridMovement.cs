@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class GridMovement : MonoBehaviour
 {
-    GameManager Scene;
-
     [SerializeField]
     private float moveSpeed = 5f;
     [SerializeField]
@@ -16,17 +15,19 @@ public class GridMovement : MonoBehaviour
 
     private GameObject[] key;
     private GameObject[] door;
+    private Scene scene;
     
     public bool haveKey = false;
-    private bool haveFinish = false;
+    public bool haveFinish = false;
 
     private void Start()
     {
         movePoint.parent = null;
         key = GameObject.FindGameObjectsWithTag("Key");
         door = GameObject.FindGameObjectsWithTag("Door");
-        //Scene = GameObject.FindGameObjectWithTag("GameManager");
+        scene = SceneManager.GetActiveScene();
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -49,6 +50,11 @@ public class GridMovement : MonoBehaviour
                 }
             }
         }
+        
+        if(scene.name == "Level 2")
+        {
+            haveFinish = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -56,28 +62,39 @@ public class GridMovement : MonoBehaviour
         
         if (col.gameObject.tag == "Key")
         {
-            Debug.Log("Key !");
             haveKey = true;
-            Debug.Log(haveKey);
+            Debug.Log("Key !"+haveKey);
             GameZone.Destroy(key[0]);
         }
 
         if (col.gameObject.tag == "Door")
-        {
-            Debug.Log("You need a key !");
-            if (col.gameObject.tag == "Door" && haveKey)
+        {          
+            if (!(col.gameObject.tag == "Door" && haveKey))
             {
-                Debug.Log("Door open !");
-                GameZone.Destroy(door[0]);
+                Debug.Log("You need a key !");
             }
+            else {Debug.Log("Door open !");
+            GameZone.Destroy(door[0]); }
+            
         }
 
         if (col.gameObject.tag == "Exit")
         {
-            Debug.Log("Exit !");
-            haveFinish = true;
-            Scene.NextLevel();
-            
+            Debug.Log("haveFinish" + haveFinish);
+
+            if (haveFinish)
+            {
+                SceneManager.LoadScene("Menu");
+                haveFinish = false;
+            }
+            else if (!haveFinish)
+            {
+                SceneManager.LoadScene("Level 2");
+                haveFinish = true;
+                haveKey = false;
+            }
         }
+       
+        
     }
 }

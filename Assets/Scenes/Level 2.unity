@@ -380,6 +380,8 @@ MonoBehaviour:
     type: 3}
   _doorGameObject: {fileID: 3362319774786369351, guid: c2cf823b761bbf243a32eefe88f8f165,
     type: 3}
+  _exitGameObject: {fileID: 6764599980767133315, guid: 0e88d75f3a436c34f81a086145456315,
+    type: 3}
 --- !u!114 &510888368
 MonoBehaviour:
   m_ObjectHideFlags: 0
