@@ -17,10 +17,12 @@ public class GridMovement : MonoBehaviour
     public bool haveKey = false;
     [SerializeField]
     public bool haveFinish = false;
-
+    
     private GameObject[] key;
     private GameObject[] door;
     private Scene scene;
+    //private GameZone _gameZone;
+    //public static bool uiWin;
 
     private void Start()
     {
@@ -60,7 +62,7 @@ public class GridMovement : MonoBehaviour
         
         IsPossesKey();
 
-        //Put "haveFinish" at True if the player have finish the first level
+        //Put "haveFinish" at True if the player has finished the first level
         if (scene.name == "Level 2")
         {
             haveFinish = true;
@@ -93,23 +95,27 @@ public class GridMovement : MonoBehaviour
         //Detect Exit's collider
         if (col.gameObject.tag == "Exit")
         {
-            Debug.Log("haveFinish" + haveFinish);
+            Debug.Log("Exit !");
 
             if (haveFinish)
             {
-                SceneManager.LoadScene("Menu");
+                Debug.Log("haveFinish True");
+                SceneManager.LoadScene("UIWinLVL2");
                 haveFinish = false;
             }
-            else if (!haveFinish)
+            else
+            if (!haveFinish)
             {
-                SceneManager.LoadScene("Level 2");
+                Debug.Log("haveFinish False");
+                SceneManager.LoadScene("UIWinLVL1");
+               
                 haveFinish = true;
                 haveKey = false;
             }
         } 
     }
 
-    //Show if the player have the key
+    //Show if the player has the key
     private void IsPossesKey()
     {
         if (haveKey)

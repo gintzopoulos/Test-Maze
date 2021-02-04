@@ -15,7 +15,9 @@ public class GameZone : MonoBehaviour
     private GameObject _doorGameObject;
     [SerializeField]
     private GameObject _exitGameObject;
-
+    /*[SerializeField]
+    public Canvas _NextLevelUI;*/
+    
 
     private Transform _playerTransform;
     private Transform _keyTransform;
@@ -29,6 +31,7 @@ public class GameZone : MonoBehaviour
  
     private readonly char[,] lvl1 = Level.level_1;
     private readonly char[,] lvl2 = Level.level_2;
+    //public static bool nextUi;
 
     private void Awake()
     {
@@ -39,11 +42,12 @@ public class GameZone : MonoBehaviour
         _gameZoneTilemap_Ground = GameObject.Find("Ground").GetComponent<Tilemap>();
         _gameZoneTilemap_Collider = GameObject.Find("Collision").GetComponent<Tilemap>();
         _tilesHolder = GetComponent<TilesHolder>();
+        //_NextLevelUI.GetComponent<Canvas>().enabled = false;
 
     }
 
     private void Start()
-    {     
+    {
         if (!lvl1Done)
         {
             InitialiseTileMap(lvl1);
