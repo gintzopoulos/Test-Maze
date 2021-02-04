@@ -55,6 +55,7 @@ public class GameZone : MonoBehaviour
         }
     }
 
+    //Generate the the Tilemap depending on Level's matrices
     private void InitialiseTileMap(char[,] level)
     {
         var size_lvl = level.Length;
@@ -119,10 +120,13 @@ public class GameZone : MonoBehaviour
         _gameZoneTilemap_Ground.CompressBounds();
         
     }
+
+    //Spawn prefabs in Tilemap
     private void Spawn(GameObject obj, Transform pos)
     {
         Instantiate(obj, pos);
     }
+    //Destroy prefabs in Tilemap
     private void Destroy(GameObject obj)
     {
         Destroy(obj);
